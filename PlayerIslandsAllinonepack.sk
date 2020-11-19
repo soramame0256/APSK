@@ -906,10 +906,7 @@ command /nick [<offline player>]:
 		{APSK::Plugins::MundoSK} is not set
 		{APSK::Plugins::SkQuery} is not set
 		if arg-1 is set:
-			set player's display name to "%arg-1%"
-			set player's displayed skin to arg-1's skin
-			set player's nametag to "%arg-1%"
-			set {APSK.nick.%player%} to "%arg-1%"
+			nick(player, arg-1)
 			if player's language is not "ja_jp":
 				message "&b[APSK]&a Changed your nickname to %arg-1%."
 			else:
@@ -1008,3 +1005,8 @@ function binary(n: number) :: number:
 		set {_l} to "%{_l}%%mod({_n},2)%" parsed as number
 		set {_n} to floor({_n}/2)
 	return {_l}
+function nick(p: player, n: offline player):
+	set {_p}'s display name to "%{_n}%"
+	set {_p}'s displayed skin to {_n}'s skin
+	set {_p}'s nametag to "%{_n}%"
+	set {APSK.nick.%player%} to "%{_n}%"
