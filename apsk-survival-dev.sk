@@ -2,13 +2,13 @@
 options:
 	Isgraveshitboxcontainsigns : false #墓の破壊判定に看板を含むか?
 	issplashwhenvillagerchange : false #村人がウィッチに変化したとき即時ダメージを周囲に付与するか?
-	ismakedamagewhenpigchange : true #豚がゾンビピッグマンに変化したとき0ダメージを自動付与するか?(自動敵対化させるか?)
+	ismakedamagewhenpigchange : false #豚がゾンビピッグマンに変化したとき0ダメージを自動付与するか?(自動敵対化させるか?)
 	mobdamagemagnilist : "zombie skeleton blaze" #ダメージ増加倍率を付与する対象
-	isspawnzombiewhengravedestroyed : true #墓破壊時にゾンビをスポーンさせそのゾンビに死亡時遺品を落させるか。
-	issetspawnedzombiesattrtovictim : true #上の設定有効時のみ適用。 上記のゾンビのattrを死亡者のattrにする
+	isspawnzombiewhengravedestroyed : false #墓破壊時にゾンビをスポーンさせそのゾンビに死亡時遺品を落させるか。
+	issetspawnedzombiesattrtovictim : false #上の設定有効時のみ適用。 上記のゾンビのattrを死亡者のattrにする
 	maxloopcountoftreebreaking : 50 #原木の一括破壊の最大ループ数
-	loopwaitontreebreakwhile : true #原木の一括破壊のウェイトをwhileループ一周時にかけるように変更します。速度は上がりますがサーバーに負荷がかかります
-	optiondisabledworlds : "skyblock" #機能を無効化するワールド(木こりのみ別枠)
+	loopwaitontreebreakwhile : false #原木の一括破壊のウェイトをwhileループ一周時にかけるように変更します。速度は上がりますがサーバーに負荷がかかります
+	optiondisabledworlds : "" #機能を無効化するワールド(木こりのみ別枠)
 	treebreakdisabledworlds : "" #木こりを無効化するワールド
 #-do not edit-#
 on script load:
