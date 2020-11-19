@@ -1,0 +1,1005 @@
+#機能については/apsk helpを参照してください
+#Do not editより下の改変,二次配布は禁止です
+options:
+	owner : <none> # あなたのMCIDを入力してください
+	token : <none> # DiscordBotのtokenを入力してください 一部機能に使う可能性があります(未実装です)
+	loginbonustimer : 24 hours #ログインボーナスが受け取れるまでの時間です。 よほどのことがない限り24 hoursと記述しておいてください
+	loginbonuscyommenu : <none> #CYOMでのログインボーナスで付与するメニュー名です 使わない場合は<none>と入力してください /menu create メニュー名 1 メニュー名で作り /menu edit メニュー名で渡すものを入れてください。
+	loginbonusmessage : &aログインボーナスを受け取りました! 次は&624時間&a後に受け取ることができます! #ログインボーナスを受け取ったときのメッセージです
+#-------------------------Do not edit--------------------------
+	version : 1.9b-fixed
+command /apsk [<text>] [<text>] [<text>]:
+	trigger:
+		{APSK::Plugins::Skript} is not set
+		if arg-1 is "help":
+			message "&a&l-*-*-*-*-*-*-*-*-*-*-*-*-*-*-"
+			if player's language is not "ja_jp":
+				message "Command list"
+			else:
+				message "コマンドリスト:"
+			if player has permission "apskpack.commands.playernbt":
+				{APSK::Plugins::SkStuff} is not set
+				if player's language is not "ja_jp":
+					message "/playernbt [<player>] [<NBT>]: Can change player's NBT."
+				else:
+					message "/playernbt [<player>] [<NBT>]: プレイヤーのNBTを変更します"
+			if player has permission "chatchanger.use":
+				{APSK::Plugins::SkQuery} is not set
+				if player's language is not "ja_jp":
+					message "/chatchange [<format>]: Can change chat format."
+				else:
+					message "/chatchange [<format>]: チャットフォーマットを変更します"
+				add 1 to {_usablecommands}
+			if player has permission "enchantmanager.use":
+				{APSK::Plugins::SkQuery} is not set
+				if player's language is not "ja_jp":
+					message "/enchantmanager: Manage item's enchantment."
+				else:
+					message "/enchantmanager: エンチャントを付与できます"
+				add 1 to {_usablecommands}
+			if player has permission "apskpack.commands.tempmute":
+				{APSK::Plugins::SkQuery} is not set
+				if player's language is not "ja_jp":
+					message "/tempmute <player> <reason> <time>: Can temporarily mute player."
+				else:
+					message "/tempmute <プレイヤー名> <理由> <期間>: 期間ミュートできます"
+				add 1 to {_usablecommands}
+			if player has permission "apskpack.commands.untempmute":
+				{APSK::Plugins::SkQuery} is not set
+				if player's language is not "ja_jp":
+					message "/untempmute <player>: Can temporarily unmute player."
+				else:
+					message "/untempmute <プレイヤー名>: 期間ミュートを解除できます"
+				add 1 to {_usablecommands}
+			if player has permission "apskpack.commands.tempban":
+				if player's language is not "ja_jp":
+					message "/tempban <player> <reason> <time>: Can temporarily ban player."
+				else:
+					message "/tempban <プレイヤー名> <理由> <期間>: 期間banできます"
+				add 1 to {_usablecommands}
+			if player has permission "apskpack.commands.untempban":
+				if player's language is not "ja_jp":
+					message "/untempban <player>: Can temporarily unban player."
+				else:
+					message "/untempban <プレイヤー名>: 期間banを解除できます"
+				add 1 to {_usablecommands}
+			if player has permission "apskpack.commands.vanish":
+				if player's language is not "ja_jp":
+					message "/apskvanish: Hide you from all players."
+				else:
+					message "/apskvanish: 姿を消すことができます"
+				add 1 to {_usablecommands}
+			if player has permission "apskpack.commands.nick":
+				{APSK::Plugins::MundoSK} is not set
+				{APSK::Plugins::SkQuery} is not set
+				if player's language is not "ja_jp":
+					message "/nick [<player>]: Change your nickname(and skin)."
+				else:
+					message "/nick [<プレイヤー名>]: ニックネームを設定します"
+				add 1 to {_usablecommands}
+			if player has permission "apskpack.blacklistver":
+				{APSK::Plugins::TuSKe} is not set
+				if player's language is not "ja_jp":
+					message "/apsk blacklistver: Can put version restrictions."
+				else:
+					message "/apsk blacklistver: バージョン制限をかけることができます"
+				add 1 to {_usablecommands}
+			if player has permission "apskpack.playerlimit":
+				if player's language is not "ja_jp":
+					message "/apsk playerlimit: Can limit the number of player."
+				else:
+					message "/apsk playerlimit: 人数制限をかけることができます"
+				add 1 to {_usablecommands}
+			if {APSK::Plugins::SkQuery} is not set:
+				if player's language is not "ja_jp":
+					message "/apsk ping: You can check your ping. (Some server software cannot execute ping.)"
+				else:
+					message "/apsk ping: pingを確認できます (ソフトウェアによっては実行できない可能性があります)"
+				add 1 to {_usablecommands}
+			if {APSK::Plugins::SkQuery} is not set:
+				if player's language is not "ja_jp":
+					message "/fixghost: Can fix ghost player/blocks."
+				else:
+					message "/fixghost: 見えないプレイヤーとゴーストブロックを修正できます(ゴーストブロックは半径5m以内)"
+			if {APSK::Plugins::CreateYourOwnMenus} is not set:
+				"{@loginbonuscyommenu}" is not "<none>"
+				if player's language is not "ja_jp":
+					message "/login: You will receive a login bonus. You can receive it again after {@loginbonustimer}."
+				else:
+					message "/login: ログインボーナスを受け取ることができます。 実行後{@loginbonustimer}経つと再度受け取ることができます"
+				add 1 to {_usablecommands}
+			if {APSK::Plugins::SkQuery} is not set:
+				"{@owner}" is "%player%"
+				if player's language is not "ja_jp":
+					message "/eval <Effect>: Can execute skript effect."
+				else:
+					message "/eval <エフェクト>: スクリプトのエフェクトを実行できます。知識がない場合は使用しないでください。"
+				add 1 to {_usablecommands}
+			if player has permission "apskpack.admin":
+				if player's language is not "ja_jp":
+					message "/adminchat: Can enable/disable adminchat prefix."
+				else:
+					message "/adminchat: アドミンチャットの接頭辞を有効/無効化できます。"
+				add 1 to {_usablecommands}
+			if {_usablecommands} is not set:
+				if player's language is not "ja_jp":
+					message "&cThere are no commands available with your permissions."
+				else:
+					message "&cあなたの権限で使用が可能なコマンドは存在しませんでした。"
+			message "&a&l-*-*-*-*-*-*-*-*-*-*-*-*-*-*-"
+			stop
+		if arg-1 is "blacklistver":
+			{APSK::Plugins::TuSKe} is not set
+			if player has permission "apskpack.blacklistver":
+				if arg-2 is "add":
+					if arg-3 is set:
+						if arg-3 is "1.8":
+							set {APSK::blv::1.8} to true
+							set {APSK::blv::1.8.1} to true
+							set {APSK::blv::1.8.2} to true
+							set {APSK::blv::1.8.3} to true
+							set {APSK::blv::1.8.4} to true
+							set {APSK::blv::1.8.5} to true
+							set {APSK::blv::1.8.6} to true
+							set {APSK::blv::1.8.7} to true
+							set {APSK::blv::1.8.8} to true
+							set {APSK::blv::1.8.9} to true
+						if arg-3 is "1.9":
+							set {APSK::blv::1.9} to true
+							set {APSK::blv::1.9.1} to true
+							set {APSK::blv::1.9.2} to true
+							set {APSK::blv::1.9.3} to true
+							set {APSK::blv::1.9.4} to true
+						if arg-3 is "1.10":
+							set {APSK::blv::1.10} to true
+							set {APSK::blv::1.10.1} to true
+							set {APSK::blv::1.10.2} to true
+						if arg-3 is "1.11":
+							set {APSK::blv::1.11} to true
+							set {APSK::blv::1.11.1} to true
+							set {APSK::blv::1.11.2} to true
+						if arg-3 is "1.12":
+							set {APSK::blv::1.12} to true
+							set {APSK::blv::1.12.1} to true
+							set {APSK::blv::1.12.2} to true
+						if arg-3 is "1.13":
+							set {APSK::blv::1.13} to true
+							set {APSK::blv::1.13.1} to true
+							set {APSK::blv::1.13.2} to true
+						if arg-3 is "1.14":
+							set {APSK::blv::1.14} to true
+							set {APSK::blv::1.14.1} to true
+							set {APSK::blv::1.14.2} to true
+							set {APSK::blv::1.14.3} to true
+							set {APSK::blv::1.14.4} to true
+						else:
+							set {APSK::blv::%arg-3%} to true
+						if player's language is not "ja_jp":
+							message "&b[APSK]&a&lAdded version %arg-3% to blacklist."
+						else:
+							message "&b[APSK]&a&lバージョン%arg-3%をブラックリストに登録しました"
+							stop
+					else:
+						if player's language is not "ja_jp":
+							message "&cPlease enter the version to be blacklisted."
+						else:
+							message "&cバージョンを入力してください"
+						stop
+				if arg-2 is "remove":
+					if arg-3 is set:
+						if arg-3 is "1.8":
+							clear {APSK::blv::1.8}
+							clear {APSK::blv::1.8.1}
+							clear {APSK::blv::1.8.2}
+							clear {APSK::blv::1.8.3}
+							clear {APSK::blv::1.8.4}
+							clear {APSK::blv::1.8.5}
+							clear {APSK::blv::1.8.6}
+							clear {APSK::blv::1.8.7}
+							clear {APSK::blv::1.8.8}
+							clear {APSK::blv::1.8.9}
+						if arg-3 is "1.9":
+							clear {APSK::blv::1.9}
+							clear {APSK::blv::1.9.1}
+							clear {APSK::blv::1.9.2}
+							clear {APSK::blv::1.9.3}
+							clear {APSK::blv::1.9.4}
+						if arg-3 is "1.10":
+							clear {APSK::blv::1.10}
+							clear {APSK::blv::1.10.1}
+							clear {APSK::blv::1.10.2}
+						if arg-3 is "1.11":
+							clear {APSK::blv::1.11}
+							clear {APSK::blv::1.11.1}
+							clear {APSK::blv::1.11.2}
+						if arg-3 is "1.12":
+							clear {APSK::blv::1.12}
+							clear {APSK::blv::1.12.1}
+							clear {APSK::blv::1.12.2}
+						if arg-3 is "1.13":
+							clear {APSK::blv::1.13}
+							clear {APSK::blv::1.13.1}
+							clear {APSK::blv::1.13.2}
+						if arg-3 is "1.14":
+							clear {APSK::blv::1.14}
+							clear {APSK::blv::1.14.1}
+							clear {APSK::blv::1.14.2}
+							clear {APSK::blv::1.14.3}
+							clear {APSK::blv::1.14.4}
+						else:
+							clear {APSK::blv::%arg-3%}
+						if player's language is not "ja_jp":
+							message "&b[APSK]&a&lRemoved version %arg-3% from blacklist."
+						else:
+							message "&b[APSK]&a&lバージョン%arg-3%をブラックリストから削除しました"
+						stop
+					else:
+						message "&cバージョンを入力してください"
+						stop
+				if arg-2 is "list":
+					message "&a&l-*-*-*-*-*-*-*-*-*-*-*-*-*-*-"
+					loop {APSK::blv::*}:
+						message "%loop-index%"
+					message "&a&l-*-*-*-*-*-*-*-*-*-*-*-*-*-*-"
+					stop
+				if arg-2 is "sendlog":
+					if {APSK::blv.sendlog::%player%} is not set:
+						set {APSK::blv.sendlog::%player%} to true
+						if player's language is not "ja_jp":
+							message "&b[APSK]&aDisplay connection log when version is restricted."
+						else:
+							message "&b[APSK]&aバージョン制限時の接続ログを表示します"
+						stop
+					else:
+						clear {APSK::blv.sendlog::%player%}
+						if player's language is not "ja_jp":
+							message "&b[APSK]&cDo not display connection log when version is restricted."
+						else:
+							message "&b[APSK]&cバージョン制限時の接続ログを表示しません"
+						stop
+				else:
+					if player's language is not "ja_jp":
+						message "&cInvalid arguments"
+						message "&cThe available arguments are:"
+						message "&cadd remove list sendlog"
+					else:
+						message "&c無効な引数です。"
+						message "&c使用可能な引数は以下の通りです:"
+						message "&cadd remove list sendlog"
+		if arg-1 is "playerlimit":
+			if arg-2 parsed as integer = arg-2 parsed as integer:
+				set {APSK::playerlimit} to arg-2 parsed as integer
+				if player's language is not "ja_jp":
+					message "&b[APSK]&fChanged the limit of player to %arg-2%"
+				else:
+					message "&b[APSK]&f制限人数を%arg-2%人に変更しました"
+				stop
+			if arg-2 is "unlimit":
+				clear {APSK::playerlimit}
+				if player's language is not "ja_jp":
+					message "&b[APSK]&fChanged the limit of player to unlimit"
+				else:
+					message "&b[APSK]&f制限人数を制限なしに変更しました"
+				stop
+			if arg-2 is "sendlog":
+				if {APSK::playerlimit.sendlog::%player%} is not set:
+					set {APSK::playerlimit.sendlog::%player%} to true
+					if player's language is not "ja_jp":
+						message "&b[APSK]&fDisplay connection log when limit of player reached."
+					else:
+						message "&b[APSK]&a人数制限時の接続ログを表示します"
+					stop
+				else:
+					clear {APSK::playerlimit.sendlog::%player%}
+					if player's language is not "ja_jp":
+						message "&b[APSK]&fDo not display connection log when limit of player reached."
+					else:
+						message "&b[APSK]&c人数制限時の接続ログを表示しません"
+					stop
+			if player's language is not "ja_jp":
+				message "&cInvalid arguments"
+				message "&cThe available arguments are:"
+				message "&c<integer> unlimit sendlog"
+			else:
+				message "&c無効な引数です。"
+				message "&c使用可能な引数は以下の通りです:"
+				message "&c整数 unlimit sendlog"
+		if arg-1 is "ping":
+			{APSK::Plugins::SkQuery} is not set
+			if arg-2 is not set:
+				if player's language is not "ja_jp":
+					message "&b[APSK]&fPong! Your ping is %player's ping%!"
+				else:
+					message "&b[APSK]&fPong! あなたのpingは%player's ping%です!"
+				stop
+			else:
+				arg-2 parsed as player is online
+				if player's language is not "ja_jp":
+					message "&b[APSK]&f%arg-2%'s ping is %arg-2 parsed as player's ping%!"
+				else:
+					message "&b[APSK]&f%arg-2%のpingは%arg-2 parsed as player's ping%です!"
+				stop
+		else:
+			if player's language is not "ja_jp":
+				message "&cInvalid arguments"
+				message "&cThe available arguments are:"
+				message "&chelp blacklistver playerlimit ping"
+			else:
+				message "&c無効な引数です。"
+				message "&c使用可能な引数は以下の通りです:"
+				message "&chelp blacklistver playerlimit ping"
+command /playernbt <player> <text>:
+	permission: apskpack.commands.playernbt
+	usage: /playernbt <プレイヤー名> <NBT>
+	trigger:
+		{APSK::Plugins::Skript} is not set
+		{APSK::Plugins::SkStuff} is not set
+		add arg-2 to arg-1's NBT
+on script load:
+	broadcast "&b[APSK]&a&lSkriptアドオンを確認しています....."
+	if version of "Skript" is "2.3.6":
+		broadcast "&b[APSK]&a&lSkript Ver.2.3.6 が読み込まれています"
+		clear {APSK::Plugins::Skript}
+	else:
+		broadcast "&b[APSK]&c&lSkript Ver.2.3.6 は読み込まれていない もしくはSkQueryが入っていないためスクリプトの機能を無効化しました。 Skript version 2.3.6を導入して再試行してください"
+		set {APSK::Plugins::Skript} to false
+	if version of "Skellett" is "1.9.6b":
+		broadcast "&b[APSK]&a&lSkellett Ver.1.9.6b が読み込まれています"
+		clear {APSK::Plugins::Skellett}
+	else:
+		broadcast "&b[APSK]&c&lSkellett Ver.1.9.6b は読み込まれていないためスクリプトの一部機能を無効化しました。 Skellett version 1.9.6bを導入して再試行してください"
+		broadcast "&b[APSK]&c&l無効化された機能:<none>"
+		set {APSK::Plugins::Skellett} to false
+	if version of "SkStuff" is "1.6.4.1-fork-1.12":
+		broadcast "&b[APSK]&a&lSkStuff Ver.1.6.4.1-fork-1.12 が読み込まれています"
+		clear {APSK::Plugins::SkStuff}
+	else:
+		broadcast "&b[APSK]&c&lSkStuff Ver.1.6.4.1-fork-1.12 は読み込まれていないためスクリプトの一部機能を無効化しました。 SkStuff version 1.6.4.1-fork-1.12を導入して再試行してください"
+		broadcast "&b[APSK]&c&l無効化された機能:PlayerNBT"
+		set {APSK::Plugins::SkStuff} to false
+	if version of "SkQuery" is "3.6.2-Lime":
+		broadcast "&b[APSK]&a&lSkQuery Ver.3.6.2-Lime が読み込まれています"
+		clear {APSK::Plugins::SkQuery}
+		broadcast "&b[APSK]&a&lサブ機能 enchantmanager ver.1.0 が読み込まれました"
+		broadcast "&b[APSK]&a&lサブ機能 ChatChanger ver.1.1 が読み込まれました"
+	else:
+		broadcast "&b[APSK]&c&lSkQuery Ver.3.6.2-Lime は読み込まれていないためスクリプトの一部機能を無効化しました。 SkQuery version 3.6.2-Limeを導入して再試行してください"
+		broadcast "&b[APSK]&c&l無効化された機能:ChatChanger,EnchantManager,TempMute,ping,fixghost"
+		set {APSK::Plugins::SkQuery} to false
+	if version of "MundoSK" is "1.8.6-BETA.58":
+		broadcast "&b[APSK]&a&lMundoSK Ver.1.8.6-BETA.58 が読み込まれています"
+		clear {APSK::Plugins::MundoSK}
+	else:
+		broadcast "&b[APSK]&c&lMundoSK Ver.1.8.6-BETA.58 は読み込まれていないためスクリプトの一部機能を無効化しました。 MundoSK version 1.8.6-BETA.58を導入して再試行してください"
+		broadcast "&b[APSK]&c&l無効化された機能:Nickname, タブ補完"
+		set {APSK::Plugins::MundoSK} to false
+	if version of "TuSKe" is "1.8.2":
+		broadcast "&b[APSK]&a&lTuSKe Ver.1.8.2 が読み込まれています"
+		clear {APSK::Plugins::TuSKe}
+	else:
+		broadcast "&b[APSK]&c&lTuSKe Ver.1.8.2 は読み込まれていないためスクリプトの一部機能を無効化しました。 TuSKe version 1.8.2を導入して再試行してください"
+		broadcast "&b[APSK]&c&l無効化された機能:バージョン制限"
+		set {APSK::Plugins::TuSKe} to false
+	if version of "CreateYourOwnMenus" is "0.5.9":
+		broadcast "&b[APSK]&a&lCreateYourOwnMenus Ver.0.5.9 が読み込まれています"
+		clear {APSK::Plugins::CreateYourOwnMenus}
+	else:
+		broadcast "&b[APSK]&c&lCreateYourOwnMenus Ver.0.5.9 は読み込まれていないためスクリプトの一部機能を無効化しました。 CreateYourOwnMenus version 0.5.9を導入して再試行してください"
+		broadcast "&b[APSK]&c&l無効化された機能:ログインボーナス"
+		set {APSK::Plugins::CreateYourOwnMenus} to false
+	broadcast "&b[APSK]&a&lPlayerIslandsSkriptPack version {@version} は読み込まれました!"
+on connect:
+	{APSK::Plugins::Skript} is not set
+	{APSK::Plugins::SkQuery} is not set
+	if {APSK::tempban.bantimer.%player's UUID%} is set:
+		set {_tempban} to difference between now and {APSK::tempban.bantime.%player's UUID%}
+		if {_tempban} is bigger than {APSK::tempban.bantimer.%player's UUID%}:
+			clear {APSK::tempban.bantime.%player's UUID%}
+			clear {APSK::tempban.bantimer.%player's UUID%}
+			clear {APSK::tempban.banreason.%player's UUID%}
+		else if {_tempban} is smaller than {APSK::tempban.bantimer.%player's UUID%}:
+			set {_tempbancount} to now
+			set {_tempbanremain} to {APSK::tempban.bantimer.%player's UUID%}
+			remove difference between {APSK::tempban.bantime.%player's UUID%} and now from {_tempbanremain}
+			add {_tempbanremain} to {_tempbancount}
+			add 9 hours to {_tempbancount}
+			if player's language is not "ja_jp":
+				kick the player due to "&cYou are banned from this server. Scheduled unban date:%{_tempbancount}%&7(remaining period:%{_tempbanremain}%) &cReason:%{APSK::tempban.banreason.%player's UUID%}%"
+			else:
+				kick the player due to "&cあなたはこのサーバーからbanされています。解除予定日時: %{_tempbancount}% &7(残り期間:%{_tempbanremain}%) &c理由: %{APSK::tempban.banreason.%player's UUID%}%"
+on connect:
+	{APSK::playerlimit} is set
+	amount of all players >= {APSK::playerlimit}
+	if player have permission "apskpack.playerlimit.override":
+		wait 10 ticks
+		if player's language is not "ja_jp":
+			message "&b[APSK]&fMax player limit reached, but you have ""apskpack.playerlimit.override"" so ignored player limit."
+		else:
+			message "&b[APSK]&f人数が制限されていますがapskpack.playerlimit.overrideのパーミッションを持っているため人数制限を無視しました"
+		stop
+	if player's language is not "ja_jp":
+		kick the player due to "&b[APSK]&c&lMax player limit reached! &7(%amount of all players%/%{APSK::playerlimit}%)"
+	else:
+		kick the player due to "&b[APSK]&c&l現在人数が制限されています。&7(%amount of all players%/%{APSK::playerlimit}%)"
+	loop {APSK::playerlimit.sendlog::*}:
+		loop-index parsed as player is online
+		if player's language is not "ja_jp":
+			message "&b[APSK]&f%player% tried to connect this server and denied due to max player limited."
+		else:
+			message "&b[APSK]&f%player%が接続を試みましたがサーバー人数が上限値を上回っているため拒否されました。" to loop-index parsed as player
+on connect:
+	{APSK::Plugins::Skript} is not set
+	{APSK::Plugins::TuSKe} is not set
+	{APSK::blv::%mc version of player%} is true
+	if player's language is not "ja_jp":
+		kick the player due to "&b[APSK]&c&lYou can't connect this server with using version %mc version of player%!"
+	else:
+		kick the player due to "&b[APSK]&c&lバージョン&6%mc version of player%では接続ができません!!!"
+	loop {APSK::blv.sendlog::*}:
+		loop-index parsed as player is online
+		if player's language is not "ja_jp":
+			message "&b[APSK]&f%player% tried to connect this server and denied due to using version %mc version of player%."
+		else:
+			message "&b[APSK]&f%player%がバージョン%mc version of player%で接続を試みました" to loop-index parsed as player
+command /enchantmanager:
+	permission: enchantmanager.use
+	trigger:
+		{APSK::Plugins::Skript} is not set
+		{APSK::Plugins::SkQuery} is not set
+		if player's tool isn't air:
+			open chest with 6 rows named "&bEnchantManager" to player
+			wait 1 tick
+			set slot 0 of player's current inventory to player's tool
+			set slot 10 of player's current inventory to glowing book named "&bダメージ軽減" with lore "&b手に持っているアイテムにダメージ軽減を付与します" and "&bレベルの設定はクリック後にチャットでしてください"
+			set slot 11 of player's current inventory to glowing book named "&b火炎耐性" with lore "&b手に持っているアイテムに火炎耐性を付与します" and "&bレベルの設定はクリック後にチャットでしてください"
+			set slot 12 of player's current inventory to glowing book named "&b落下耐性" with lore "&b手に持っているアイテムに落下耐性を付与します" and "&bレベルの設定はクリック後にチャットでしてください"
+			set slot 13 of player's current inventory to glowing book named "&b爆発耐性" with lore "&b手に持っているアイテムに爆発耐性を付与します" and "&bレベルの設定はクリック後にチャットでしてください"
+			set slot 14 of player's current inventory to glowing book named "&b飛び道具耐性" with lore "&b手に持っているアイテムに飛び道具耐性を付与します" and "&bレベルの設定はクリック後にチャットでしてください"
+			set slot 15 of player's current inventory to glowing book named "&b水中呼吸" with lore "&b手に持っているアイテムに水中呼吸を付与します" and "&bレベルの設定はクリック後にチャットでしてください"
+			set slot 16 of player's current inventory to glowing book named "&b水中採掘" with lore "&b手に持っているアイテムに水中採掘を付与します"
+			set slot 19 of player's current inventory to glowing book named "&b棘の鎧" with lore "&b手に持っているアイテムに棘の鎧を付与します" and "&bレベルの設定はクリック後にチャットでしてください"
+			set slot 20 of player's current inventory to glowing book named "&b水中歩行" with lore "&b手に持っているアイテムに水中歩行を付与します" and "&bレベルの設定はクリック後にチャットでしてください"
+			set slot 21 of player's current inventory to glowing book named "&bダメージ増加" with lore "&b手に持っているアイテムにダメージ増加を付与します" and "&bレベルの設定はクリック後にチャットでしてください"
+			set slot 22 of player's current inventory to glowing book named "&bアンデット特攻" with lore "&b手に持っているアイテムにアンデット特攻を付与します" and "&bレベルの設定はクリック後にチャットでしてください"
+			set slot 23 of player's current inventory to glowing book named "&b虫特攻" with lore "&b手に持っているアイテムに虫特攻を付与します" and "&bレベルの設定はクリック後にチャットでしてください"
+			set slot 24 of player's current inventory to glowing book named "&bノックバック" with lore "&b手に持っているアイテムにノックバックを付与します" and "&bレベルの設定はクリック後にチャットでしてください"
+			set slot 25 of player's current inventory to glowing book named "&b火属性" with lore "&b手に持っているアイテムに火属性を付与します" and "&bレベルの設定はクリック後にチャットでしてください"
+			set slot 28 of player's current inventory to glowing book named "&bドロップ増加" with lore "&b手に持っているアイテムにドロップ増加を付与します" and "&bレベルの設定はクリック後にチャットでしてください"
+			set slot 29 of player's current inventory to glowing book named "&b効率強化" with lore "&b手に持っているアイテムに効率強化を付与します" and "&bレベルの設定はクリック後にチャットでしてください"
+			set slot 30 of player's current inventory to glowing book named "&bシルクタッチ" with lore "&b手に持っているアイテムにシルクタッチを付与します"
+			set slot 31 of player's current inventory to glowing book named "&b耐久力" with lore "&b手に持っているアイテムに耐久力を付与します" and "&bレベルの設定はクリック後にチャットでしてください"
+			set slot 32 of player's current inventory to glowing book named "&b幸運" with lore "&b手に持っているアイテムに幸運を付与します" and "&bレベルの設定はクリック後にチャットでしてください"
+			set slot 33 of player's current inventory to glowing book named "&b射撃ダメージ増加" with lore "&b手に持っているアイテムに射撃ダメージ増加を付与します" and "&bレベルの設定はクリック後にチャットでしてください"
+			set slot 34 of player's current inventory to glowing book named "&bパンチ" with lore "&b手に持っているアイテムにパンチを付与します" and "&bレベルの設定はクリック後にチャットでしてください"
+			set slot 37 of player's current inventory to glowing book named "&bフレイム" with lore "&b手に持っているアイテムにフレイムを付与します"
+			set slot 38 of player's current inventory to glowing book named "&b無限" with lore "&b手に持っているアイテムに無限を付与します"
+			set slot 39 of player's current inventory to glowing book named "&b宝釣り" with lore "&b手に持っているアイテムに宝釣りを付与します" and "&bレベルの設定はクリック後にチャットでしてください"
+			set slot 40 of player's current inventory to glowing book named "&b入れ食い" with lore "&b手に持っているアイテムに入れ食いを付与します" and "&bレベルの設定はクリック後にチャットでしてください"
+			set slot 41 of player's current inventory to glowing book named "&b修繕" with lore "&b手に持ってるアイテムに修繕を付与します"
+			set slot 42 of player's current inventory to glowing book named "&b氷渡り" with lore "&b手に持っているアイテムに氷渡りを付与します" and "&bレベルの設定はクリック後にチャットでしてください"
+			set slot 53 of player's current inventory to red wool block named "&cエンチャントをすべて破棄" with lore "&cエンチャントをすべて破棄します"
+		else:
+			message "&cError! アイテムを所持した状態でないと使用できません!"
+on inventory click:
+	{APSK::Plugins::Skript} is not set
+	{APSK::Plugins::SkQuery} is not set
+	if name of player's current inventory contains "&bEnchantManager":
+		if clicked slot is 10:
+			cancel event
+			close player's inventory
+			message "&bチャットに付与するエンチャントのレベルを入力してください" to player
+			set {%player%.enchant} to "prot"
+		if clicked slot is 11:
+			cancel event
+			close player's inventory
+			message "&bチャットに付与するエンチャントのレベルを入力してください" to player
+			set {%player%.enchant} to "firepro"
+		if clicked slot is 12:
+			cancel event
+			close player's inventory
+			message "&bチャットに付与するエンチャントのレベルを入力してください" to player
+			set {%player%.enchant} to "fallpro"
+		if clicked slot is 13:
+			cancel event
+			close player's inventory
+			message "&bチャットに付与するエンチャントのレベルを入力してください" to player
+			set {%player%.enchant} to "blastpro"
+		if clicked slot is 14:
+			cancel event
+			close player's inventory
+			message "&bチャットに付与するエンチャントのレベルを入力してください" to player
+			set {%player%.enchant} to "projepro"
+		if clicked slot is 15:
+			cancel event
+			close player's inventory
+			message "&bチャットに付与するエンチャントのレベルを入力してください" to player
+			set {%player%.enchant} to "resp"
+		if clicked slot is 16:
+			cancel event
+			close player's inventory
+			message "&bエンチャントしました" to player
+			enchant player's tool with Aqua Affinity
+		if clicked slot is 19:
+			cancel event
+			close player's inventory
+			message "&bチャットに付与するエンチャントのレベルを入力してください" to player
+			set {%player%.enchant} to "thor"
+		if clicked slot is 20:
+			cancel event
+			close player's inventory
+			message "&bチャットに付与するエンチャントのレベルを入力してください" to player
+			set {%player%.enchant} to "dept"
+		if clicked slot is 21:
+			cancel event
+			close player's inventory
+			message "&bチャットに付与するエンチャントのレベルを入力してください" to player
+			set {%player%.enchant} to "shar"
+		if clicked slot is 22:
+			cancel event
+			close player's inventory
+			message "&bチャットに付与するエンチャントのレベルを入力してください" to player
+			set {%player%.enchant} to "smit"
+		if clicked slot is 23:
+			cancel event
+			close player's inventory
+			message "&bチャットに付与するエンチャントのレベルを入力してください" to player
+			set {%player%.enchant} to "bane"
+		if clicked slot is 24:
+			cancel event
+			close player's inventory
+			message "&bチャットに付与するエンチャントのレベルを入力してください" to player
+			set {%player%.enchant} to "knoc"
+		if clicked slot is 25:
+			cancel event
+			close player's inventory
+			message "&bチャットに付与するエンチャントのレベルを入力してください" to player
+			set {%player%.enchant} to "fireas"
+		if clicked slot is 28:
+			cancel event
+			close player's inventory
+			message "&bチャットに付与するエンチャントのレベルを入力してください" to player
+			set {%player%.enchant} to "loot"
+		if clicked slot is 29:
+			cancel event
+			close player's inventory
+			message "&bチャットに付与するエンチャントのレベルを入力してください" to player
+			set {%player%.enchant} to "effi"
+		if clicked slot is 30:
+			cancel event
+			close player's inventory
+			message "&bエンチャントしました" to player
+			enchant player's tool with Silk Touch
+		if clicked slot is 31:
+			cancel event
+			close player's inventory
+			message "&bチャットに付与するエンチャントのレベルを入力してください" to player
+			set {%player%.enchant} to "unbr"
+		if clicked slot is 32:
+			cancel event
+			close player's inventory
+			message "&bチャットに付与するエンチャントのレベルを入力してください" to player
+			set {%player%.enchant} to "fort"
+		if clicked slot is 33:
+			cancel event
+			close player's inventory
+			message "&bチャットに付与するエンチャントのレベルを入力してください" to player
+			set {%player%.enchant} to "pow"
+		if clicked slot is 34:
+			cancel event
+			close player's inventory
+			message "&bチャットに付与するエンチャントのレベルを入力してください" to player
+			set {%player%.enchant} to "pun"
+		if clicked slot is 37:
+			cancel event
+			close player's inventory
+			enchant player's tool with Flame
+			message "&bエンチャントしました" to player
+		if clicked slot is 38:
+			cancel event
+			close player's inventory
+			enchant player's tool with Infinity
+			message "&bエンチャントしました" to player
+		if clicked slot is 39:
+			cancel event
+			close player's inventory
+			message "&bチャットに付与するエンチャントのレベルを入力してください" to player
+			set {%player%.enchant} to "luck"
+		if clicked slot is 40:
+			cancel event
+			close player's inventory
+			message "&bチャットに付与するエンチャントのレベルを入力してください" to player
+			set {%player%.enchant} to "lure"
+		if clicked slot is 41:
+			cancel event
+			close player's inventory
+			enchant player's tool with Mending
+			message "&bエンチャントしました" to player
+		if clicked slot is 42:
+			cancel event
+			close player's inventory
+			message "&bチャットに付与するエンチャントのレベルを入力してください" to player
+			set {%player%.enchant} to "fros"
+		if clicked slot is 53:
+			disenchant player's tool
+			cancel event
+		else:
+			cancel event
+on chat:
+	{APSK::Plugins::Skript} is not set
+	{APSK::Plugins::SkQuery} is not set
+	if {%sender%.enchant} is set:
+		cancel event
+		set {_n} to message parsed as number
+		if sender's tool isn't air:
+			if sender has permission "enchantmanager.enchant":
+				if {_n} <= 32768:
+					if {%sender%.enchant} is "prot":
+						set {_n} to "Protection %{_n}%"
+						evaluate "enchant sender's tool with %{_n}%"
+						message "&bエンチャントしました" to sender
+						clear {%sender%.enchant}
+					if {%sender%.enchant} is "firepro":
+						set {_n} to "Fire Protection %{_n}%"
+						evaluate "enchant sender's tool with %{_n}%"
+						message "&bエンチャントしました" to sender
+						clear {%sender%.enchant}
+					if {%sender%.enchant} is "fallpro":
+						set {_n} to "Feather Falling %{_n}%"
+						evaluate "enchant sender's tool with %{_n}%"
+						message "&bエンチャントしました" to sender
+						clear {%sender%.enchant}
+					if {%sender%.enchant} is "blastpro":
+						set {_n} to "Blast Protection %{_n}%"
+						evaluate "enchant sender's tool with %{_n}%"
+						message "&bエンチャントしました" to sender
+						clear {%sender%.enchant}
+					if {%sender%.enchant} is "projepro":
+						set {_n} to "Projectile Protection %{_n}%"
+						evaluate "enchant sender's tool with %{_n}%"
+						message "&bエンチャントしました" to sender
+						clear {%sender%.enchant}
+					if {%sender%.enchant} is "resp":
+						set {_n} to "Respiration %{_n}%"
+						evaluate "enchant sender's tool with %{_n}%"
+						message "&bエンチャントしました" to sender
+						clear {%sender%.enchant}
+					if {%sender%.enchant} is "aqua":
+						set {_n} to "Aqua Affinity %{_n}%"
+						evaluate "enchant sender's tool with %{_n}%"
+						message "&bエンチャントしました" to sender
+						clear {%sender%.enchant}
+					if {%sender%.enchant} is "thor":
+						set {_n} to "Thorns %{_n}%"
+						evaluate "enchant sender's tool with %{_n}%"
+						message "&bエンチャントしました" to sender
+						clear {%sender%.enchant}
+					if {%sender%.enchant} is "dept":
+						set {_n} to "Depth Strider %{_n}%"
+						evaluate "enchant sender's tool with %{_n}%"
+						message "&bエンチャントしました" to sender
+						clear {%sender%.enchant}
+					if {%sender%.enchant} is "shar":
+						set {_n} to "Sharpness %{_n}%"
+						evaluate "enchant sender's tool with %{_n}%"
+						message "&bエンチャントしました" to sender
+						clear {%sender%.enchant}
+					if {%sender%.enchant} is "smit":
+						set {_n} to "Smite %{_n}%"
+						evaluate "enchant sender's tool with %{_n}%"
+						message "&bエンチャントしました" to sender
+						clear {%sender%.enchant}
+					if {%sender%.enchant} is "bane":
+						set {_n} to "Bane of Arthropods %{_n}%"
+						evaluate "enchant sender's tool with %{_n}%"
+						message "&bエンチャントしました" to sender
+						clear {%sender%.enchant}
+					if {%sender%.enchant} is "knoc":
+						set {_n} to "Knockback %{_n}%"
+						evaluate "enchant sender's tool with %{_n}%"
+						message "&bエンチャントしました" to sender
+						clear {%sender%.enchant}
+					if {%sender%.enchant} is "fireas":
+						set {_n} to "Fire Aspect %{_n}%"
+						evaluate "enchant sender's tool with %{_n}%"
+						message "&bエンチャントしました" to sender
+						clear {%sender%.enchant}
+					if {%sender%.enchant} is "loot":
+						set {_n} to "Looting %{_n}%"
+						evaluate "enchant sender's tool with %{_n}%"
+						message "&bエンチャントしました" to sender
+						clear {%sender%.enchant}
+					if {%sender%.enchant} is "effi":
+						set {_n} to "Efficiency %{_n}%"
+						evaluate "enchant sender's tool with %{_n}%"
+						message "&bエンチャントしました" to sender
+						clear {%sender%.enchant}
+					if {%sender%.enchant} is "unbr":
+						set {_n} to "Unbreaking %{_n}%"
+						evaluate "enchant sender's tool with %{_n}%"
+						message "&bエンチャントしました" to sender
+						clear {%sender%.enchant}
+					if {%sender%.enchant} is "fort":
+						set {_n} to "Fortune %{_n}%"
+						evaluate "enchant sender's tool with %{_n}%"
+						message "&bエンチャントしました" to sender
+						clear {%sender%.enchant}
+					if {%sender%.enchant} is "pow":
+						set {_n} to "Power %{_n}%"
+						evaluate "enchant sender's tool with %{_n}%"
+						message "&bエンチャントしました" to sender
+						clear {%sender%.enchant}
+					if {%sender%.enchant} is "pun":
+						set {_n} to "Punch %{_n}%"
+						evaluate "enchant sender's tool with %{_n}%"
+						message "&bエンチャントしました" to sender
+						clear {%sender%.enchant}
+					if {%sender%.enchant} is "fros":
+						set {_n} to "Frost Walker %{_n}%"
+						evaluate "enchant sender's tool with %{_n}%"
+						message "&bエンチャントしました" to sender
+						clear {%sender%.enchant}
+					if {%sender%.enchant} is "luck":
+						set {_n} to "Luck of the Sia %{_n}%"
+						evaluate "enchant sender's tool with %{_n}%"
+						message "&bエンチャントしました" to sender
+						clear {%sender%.enchant}
+					if {%sender%.enchant} is "lure":
+						set {_n} to "Lure %{_n}%"
+						evaluate "enchant sender's tool with %{_n}%"
+						message "&bエンチャントしました" to sender
+						clear {%sender%.enchant}
+					else:
+						{%sender%.enchant} is set
+						message "&cError! 実行中に不明なエラーが発生しました! soramame_256##0256に報告してください!"
+						stop
+				else:
+					message "&c数値は32768以下にしてください!"
+					clear {%sender%.enchant}
+					stop
+			else:
+				message "&c権限が足りません!"
+				clear {%sender%.enchant}
+		else:
+			message "&c手にアイテムを持ってください!"
+	else:
+		stop
+
+command /chatchange [<text>]:
+	permission:chatchanger.use
+	trigger:
+		{APSK::Plugins::SkQuery} is not set
+		{APSK::Plugins::Skript} is not set
+		if arg-1 is set:
+			if arg-1 contains "%%player%%":
+				if arg-1 contains "%%message%%":
+					set {chatmessage} to colored arg
+					if player's language is not "ja_jp":
+						message "&bChanged chat format. (DiscordSRV will not working and may conflict with other skripts)"
+					else:
+						message "&bチャットメッセージを変更しました(DiscordSRVが機能しません またほかのスクリプトと競合する可能性があります)"
+					stop
+				else:
+					if player's language is not "ja_jp":
+						message "&c%%message%% required"
+					else:
+						message "&c%%message%%(チャット内容)は必須です!"
+			else:
+				if player's language is not "ja_jp":
+					message "&c%%player%% required"
+				else:
+					message "&c%%player%%(プレイヤー名)は必須です!"
+		else:
+			if player's language is not "ja_jp":
+				message "&bDisabled Chatchanger.(TempMute will not working)"
+			else:
+				message "&bチャットチェンジャーを無効化しました(TempMuteが扱えません)"
+			clear {chatmessage}
+on chat:
+	if the first index of "$" in the message is 1:
+		{APSK::adminchat.%player%} is set
+		replace all "$" with "" in message
+		cancel event
+		set {_s} to "%player%"
+		if player's prefix is set:
+			set {_s} to "%player's prefix%%{_s}%"
+		if player's suffix is set:
+			set {_s} to "%{_s}%%player's suffix%"
+		loop all players:
+			loop-player has permission "apskpack.admin"
+			message "&c[AC]&f%{_s}%&a: &f%message%" to loop-player
+		stop
+	{APSK::Plugins::Skript} is not set
+	{APSK::Plugins::SkQuery} is not set
+	{chatmessage} is set
+	cancel event
+	if {APSK::tempmute.reason.%player's UUID%} is set:
+		set {_tempmute} to difference between now and {APSK::tempmute.time.%player's UUID%}
+		if {_tempmute} is bigger than {APSK::tempmute.timer.%player's UUID%}:
+			clear {APSK::tempmute.time.%player's UUID%}
+			clear {APSK::tempmute.timer.%player's UUID%}
+			clear {APSK::tempmute.reason.%player's UUID%}
+		else if {_tempmute} is smaller than {APSK::tempmute.timer.%player's UUID%}:
+			set {_tempmutecount} to now
+			set {_tempmuteremain} to {APSK::tempmute.timer.%player's UUID%}
+			remove difference between {APSK::tempmute.time.%player's UUID%} and now from {_tempmuteremain}
+			add {_tempmuteremain} to {_tempmutecount}
+			add 9 hours to {_tempmutecount}
+			if player's language is not "ja_jp":
+				message "&cYou are muted. Scheduled unmute date:%{_tempmutecount}%&7(remaining period:%{_tempmuteremain}%) &cReason:%{APSK::tempmute.reason.%player's UUID%}%"
+			else:
+				message "&cあなたは現在muteされています。解除予定日時: %{_tempmutecount}% &7(残り期間:%{_tempmuteremain}%) &c理由: %{APSK::tempmute.reason.%player's UUID%}%"
+			stop
+	set {_chatmessage} to {chatmessage}
+	if {APSK.nick.%player%} is set:
+		replace all "%%player%%" in {_chatmessage} with {APSK.nick.%player%}
+	evaluate "broadcast ""%{_chatmessage}%"""
+command /tempmute <offline player> <text> <timespan>:
+	permission: apskpack.commands.tempmute
+	usage: /tempmute <プレイヤー名> <理由> <期間(Ex. 10minutes)>
+	trigger:
+		{APSK::Plugins::Skript} is not set
+		{APSK::Plugins::SkQuery} is not set
+		if {APSK::tempmute.reason.%arg-1's UUID%} is not set:
+			set {APSK::tempmute.time.%arg-1's UUID%} to now
+			set {APSK::tempmute.timer.%arg-1's UUID%} to arg-3
+			set {APSK::tempmute.reason.%arg-1's UUID%} to arg-2
+			broadcast "&b[APSK]&c%arg-1%が%arg-2%の理由で%arg-3%の間muteされました"
+command /untempmute <offline player>:
+	permission: apskpack.commands.untempmute
+	usage: /untempmute <プレイヤー名>
+	trigger:
+		{APSK::Plugins::Skript} is not set
+		clear {APSK::tempmute.time.%arg-1's UUID%}
+		clear {APSK::tempmute.timer.%arg-1's UUID%}
+		clear {APSK::tempmute.reason.%arg-1's UUID%}
+command /tempban <offline player> <text> <timespan>:
+	permission: apskpack.commands.tempban
+	usage: /tempban <プレイヤー名> <理由> <期間(Ex. 10minutes)>
+	trigger:
+		{APSK::Plugins::Skript} is not set
+		if {APSK::tempban.banreason.%arg-1's UUID%} is not set:
+			set {APSK::tempban.bantime.%arg-1's UUID%} to now
+			set {APSK::tempban.bantimer.%arg-1's UUID%} to arg-3
+			set {APSK::tempban.banreason.%arg-1's UUID%} to arg-2
+			broadcast "&b[APSK]&c %arg-1%が%arg-3%の間%arg-2%の理由でbanされました"
+			if arg-1's language is not "ja_jp":
+				kick arg-1 due to "&b[APSK]&c You are banned this server for %arg-3% because %arg-2%"
+			else:
+				kick arg-1 due to "&b[APSK]&c %arg-3%の間%arg-2%の理由でbanされました"
+command /untempban <offline player>:
+	permission: apskpack.commands.untempban
+	usage: /untempban <プレイヤー名>
+	trigger:
+		{APSK::Plugins::Skript} is not set
+		clear {APSK::tempban.bantime.%arg-1's UUID%}
+		clear {APSK::tempban.bantimer.%arg-1's UUID%}
+		clear {APSK::tempban.banreason.%arg-1's UUID%}
+command /apskvanish:
+	permission: apskpack.commands.vanish
+	trigger:
+		{APSK::Plugins::Skript} is not set
+		{APSK::Plugins::SkQuery} is not set
+		if {APSK::vanish.%player%} is not set:
+			hide player from all players
+			set {APSK::vanish.%player%} to true
+			if player's language is not "ja_jp":
+				message "&b[APSK]&aHidden you from all players."
+			else:
+				message "&b[APSK]&a全プレイヤーから視認されなくなりました。"
+		else:
+			reveal player from all players
+			clear {APSK::vanish.%player%}
+			if player's language is not "ja_jp":
+				message "&b[APSK]&aRevealed you from all players."
+			else:
+				message "&b[APSK]&a全プレイヤーから視認されるようになりました。"
+on join:
+	{APSK::Plugins::Skript} is not set
+	{APSK::Plugins::SkQuery} is not set
+	loop all players:
+		{APSK::vanish.%loop-player%} is set
+		hide loop-player from all players
+command /nick [<offline player>]:
+	permission: apskpack.commands.nick
+	trigger:
+		{APSK::Plugins::Skript} is not set
+		{APSK::Plugins::MundoSK} is not set
+		{APSK::Plugins::SkQuery} is not set
+		if arg-1 is set:
+			set player's display name to "%arg-1%"
+			set player's displayed skin to arg-1's skin
+			set player's nametag to "%arg-1%"
+			set {APSK.nick.%player%} to "%arg-1%"
+			if player's language is not "ja_jp":
+				message "&b[APSK]&a Changed your nickname to %arg-1%."
+			else:
+				message "&b[APSK]&a ニックネームを%arg-1%に設定しました"
+		else:
+			reset player's display name
+			reset player's displayed skin
+			reset player's nametag
+			clear {APSK.nick.%player%}
+			if player's language is not "ja_jp":
+				message "&b[APSK]&a Cleared your nickname."
+			else:
+				message "&b[APSK]&a ニックネームを解除しました"
+on tab complete:
+	{APSK::Plugins::Skript} is not set
+	if event-string is "/apsk ":
+		add "help" to completions
+		add "playerlimit" to completions
+		if {APSK::Plugins::TuSKe} is not set:
+			add "blacklistver" to completions
+		if {APSK::Plugins::SkQuery} is not set:
+			add "ping" to completions
+	if event-string is "/apsk blacklistver ":
+		{APSK::Plugins::TuSKe} is not set
+		add "add" to completions
+		add "remove" to completions
+		add "list" to completions
+		add "sendlog" to completions
+	if event-string is "/apsk playerlimit ":
+		add "unlimit" to completions
+		add "sendlog" to completions
+	if event-string is "/apsk ping ":
+		{APSK::Plugins::SkQuery} is not set
+		loop all players:
+			add "%loop-player%" to completions
+command /fixghost:
+	trigger:
+		loop all blocks in radius 5 of player:
+			make player see loop-block as loop-block
+		hide all players from player
+		loop all players:
+			{APSK::vanish.%loop-player%} is not set
+			reveal loop-player from player
+		if player's language is not "ja_jp":
+			message "&b[APSK]&f Ghost player/blocks are fixed!"
+		else:
+			message "&b[APSK]&f ゴーストプレイヤー/ブロックを修正しました!"
+command /adminchat:
+	permission: apskpack.admin
+	trigger:
+		if {APSK::adminchat.%player%} is set:
+			clear {APSK::adminchat.%player%}
+			if player's language is not "ja_jp":
+				message "&b[APSK]&f Admin Chat prefix disabled!"
+			else:
+				message "&b[APSK]&f アドミンチャットの接頭辞を無効化しました!"
+		else:
+			set {APSK::adminchat.%player%} to true
+			if player's language is not "ja_jp":
+				message "&b[APSK]&f Admin Chat prefix enabled!"
+				message "&b[APSK]&f You can admin chat by adding $ to the chat prefix!"
+			else:
+				message "&b[APSK]&f アドミンチャットの接頭辞を有効化しました!"
+				message "&b[APSK]&f チャットの接頭辞に$をつけることでアドミンチャットができます!"
+on join:
+	message "&b[APSK]&f APSK Ver.{@version} が使われています。"
+	message "&b[APSK]&f コマンドは/apsk helpから確認することができます。"
+command /login:
+	trigger:
+		{APSK::Plugins::CreateYourOwnMenus} is not set
+		if "{@loginbonuscyommenu}" is "<none>":
+			message "&b[APSK] &cこの機能は現在無効化されています。"
+			stop
+		if {APSK::loginbonustimer.%player's UUID%} is not set:
+			command "menu grab %player% {@loginbonuscyommenu}"
+			message "&b[APSK] {@loginbonusmessage}"
+			set {APSK::loginbonustimer.%player's UUID%} to now
+		else if difference between now and {APSK::loginbonustimer.%player's UUID%} >= {@loginbonustimer}:
+			command "menu grab %player% {@loginbonuscyommenu}"
+			message "&b[APSK] {@loginbonusmessage}"
+			set {APSK::loginbonustimer.%player's UUID%} to now
+		else:
+			set {_a} to {@loginbonustimer}
+			remove difference between now and {APSK::loginbonustimer.%player's UUID%} from {_a}
+			message "&b[APSK] &c今日はもうログインしました 次は%{_a}%後にもらえます"
+command /eval <text>:
+	permission: apskpack.onlyownercommand
+	usage: /eval <Effect>
+	trigger:
+		{APSK::Plugins::SkQuery} is not set
+		"{@owner}" is not "<none>"
+		"{@owner}" is "%player%"
+		evaluate arg-1

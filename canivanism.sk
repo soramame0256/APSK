@@ -1,0 +1,21 @@
+on death:
+	type of victim is villager or player
+	add rotten flesh named "&c???の肉" to drops
+on eat:
+	name of event-item is "&c???の肉"
+	cancel event
+	remove 1 of event-item from player
+	add 3 to player's hunger
+	chance of 30%:
+		apply potion of wither of tier 5 to the player for 999 days
+		message "&c病気になった"
+		set {neuronsick::%player%} to true
+on drink of milk:
+	{neuronsick::%player%} is true
+	wait a tick
+	apply potion of wither of tier 5 to the player for 999 days
+on death of player:
+	event-damagecause is wither
+	{neuronsick::%player%} is true
+	set death message to "%player%は人肉を食べたことによるクールー病の発症により死亡した"
+	clear {neuronsick::%player%}
