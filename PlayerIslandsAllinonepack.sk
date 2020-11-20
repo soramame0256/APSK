@@ -3,11 +3,11 @@
 options:
 	owner : <none> # あなたのMCIDを入力してください
 	token : <none> # DiscordBotのtokenを入力してください 一部機能に使う可能性があります(未実装です)
-	loginbonustimer : 24 hours #ログインボーナスが受け取れるまでの時間です。 よほどのことがない限り24 hoursと記述しておいてください
+	loginbonustimer : 24 hours #ログインボーナスが受け取れるまでの時間です。
 	loginbonuscyommenu : <none> #CYOMでのログインボーナスで付与するメニュー名です 使わない場合は<none>と入力してください /menu create メニュー名 1 メニュー名で作り /menu edit メニュー名で渡すものを入れてください。
 	loginbonusmessage : &aログインボーナスを受け取りました! 次は&624時間&a後に受け取ることができます! #ログインボーナスを受け取ったときのメッセージです
 #-------------------------Do not edit--------------------------
-	version : 1.9b-fixed
+	version : 1.10b-dev
 command /apsk [<text>] [<text>] [<text>]:
 	trigger:
 		{APSK::Plugins::Skript} is not set
@@ -120,6 +120,12 @@ command /apsk [<text>] [<text>] [<text>]:
 					message "/adminchat: Can enable/disable adminchat prefix."
 				else:
 					message "/adminchat: アドミンチャットの接頭辞を有効/無効化できます。"
+				add 1 to {_usablecommands}
+			if player has permission "minecraft.command.gamemode":
+				if player's language is not "ja_jp":
+					message "/gm <mode> [<player>]: Can change your/other player's gamemode."
+				else:
+					message "/gm <モード> [<プレイヤー>]: ゲームモードを変更します。"
 				add 1 to {_usablecommands}
 			if {_usablecommands} is not set:
 				if player's language is not "ja_jp":
@@ -1000,6 +1006,69 @@ command /eval <text>:
 		"{@owner}" is not "<none>"
 		"{@owner}" is "%player%"
 		evaluate arg-1
+command /gm <text> [<player>]:
+	aliases: gamem
+	usage: /gm <0,1,2,3,survival,creative,adventure,spectator,s,c,a,sp>
+	permission: minecraft.command.gamemode
+	trigger:
+		if arg-2 is not set:
+			if arg-1 is "0", "survival" or "s":
+				set player's gamemode to survival
+				if player's language is not "ja_jp":
+					message "&fYour gamemode changed to &nSurvival"
+				else:
+					message "&fゲームモードを&nサバイバル&fに変更しました"
+			if arg-1 is "1", "creative" or "c":
+				set player's gamemode to creative
+				if player's language is not "ja_jp":
+					message "&fYour gamemode changed to &nCreative"
+				else:
+					message "&fゲームモードを&nクリエイティブ&fに変更しました"
+			if arg-1 is "2", "adventure" or "a":
+				set player's gamemode to adventure
+				if player's language is not "ja_jp":
+					message "&fYour gamemode changed to &nAdventure"
+				else:
+					message "&fゲームモードを&nアドベンチャー&fに変更しました"
+			if arg-1 is "3", "spectator" or "sp":
+				set player's gamemode to spectator
+				if player's language is not "ja_jp":
+					message "&fYour gamemode changed to &nSpectator"
+				else:
+					message "&fゲームモードを&nスペクテイター&fに変更しました"
+		else:
+			if arg-1 is "0", "survival" or "s":
+				set arg-2's gamemode to survival
+				if arg-2's language is not "ja_jp":
+					message "&fYour gamemode changed to &nSurvival" to arg-2
+					message "&fChanged %arg-2%'s gamemode to &nSurvival"
+				else:
+					message "&fゲームモードが&nサバイバル&fに変更されました" to arg-2
+					message "&f%arg-2%のゲームモードを&nサバイバル&fに変更しました"
+			if arg-1 is "1", "creative" or "c":
+				set arg-2's gamemode to creative
+				if arg-2's language is not "ja_jp":
+					message "&fYour gamemode changed to &nCreative" to arg-2
+					message "&fChanged %arg-2%'s gamemode to &nCreative"
+				else:
+					message "&fゲームモードが&nクリエイティブ&fに変更されました" to arg-2
+					message "&f%arg-2%のゲームモードを&nクリエイティブ&fに変更しました"
+			if arg-1 is "2", "adventure" or "a":
+				set arg-2's gamemode to adventure
+				if arg-2's language is not "ja_jp":
+					message "&fYour gamemode changed to &nAdventure" to arg-2
+					message "&fChanged %arg-2%'s gamemode to &nAdventure"
+				else:
+					message "&fゲームモードが&nアドベンチャー&fに変更されました" to arg-2
+					message "&f%arg-2%のゲームモードを&nアドベンチャー&fに変更しました"
+			if arg-1 is "3", "spectator" or "sp":
+				set arg-2's gamemode to spectator
+				if arg-2's language is not "ja_jp":
+					message "&fYour gamemode changed to &nSpectator" to arg-2
+					message "&fChanged %arg-2%'s gamemode to &nSpectator"
+				else:
+					message "&fゲームモードが&nスペクテイター&fに変更されました" to arg-2
+					message "&f%arg-2%のゲームモードを&nスペクテイター&fに変更しました"
 function binary(n: number) :: number:
 	while {_n} is not 0:
 		set {_l} to "%{_l}%%mod({_n},2)%" parsed as number
